@@ -10,39 +10,44 @@ class PathPlanner
 {
 public:
 
+  // Current vehicle state
   struct VehicleState
   {
-    double x;
-    double y;
+    double x; // longitudinal world coordinate
+    double y; // lateral world coordinate
 
-    double refX;
-    double refY;
+    double refX; // longitudinal reference point
+    double refY; // lateral reference point
 
-    double s; 
-    double d; 
+    double s; // longitudinal frenet coordinate
+    double d; // lateral frenet coordinate
 
-    double yawDeg; 
-    double yawRad;
+    double yawDeg; // orientation in degrees
+    double yawRad; // orientation in rad
 
-    double speedMph;
+    double speedMph; // velocity in miles per hour
 
-    double endS;
-    double endD;
+    double endS; // end frenet s coordinate from last sent path
+    double endD; // end frenet d coordinate from last sent path
   };
 
+  // Map containing all waypoints
   struct WpMap
   {
-    vector<double> x;
-    vector<double> y;
-    vector<double> s;
-    vector<double> dx;
-    vector<double> dy;
+    vector<double> x;  // waypoint longitudinal world coordinates
+    vector<double> y;  // waypoint lateral world coordinates
+    vector<double> s;  // waypoint longitudinal frenet coordinates
+    vector<double> dx; // waypoint lane offset vector x component
+    vector<double> dy; // waypoint lane offset vector y component
   };
 
+  // Constructor
   PathPlanner(const WpMap& map);
 
+  // Destructor
   virtual ~PathPlanner();
 
+  // Calc next path
   void calcPath(
     const VehicleState&           state,
     const vector<double>&         previous_path_x,
