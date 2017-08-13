@@ -10,6 +10,22 @@ Each waypoint in the list contains  [x,y,s,dx,dy] values. x and y are the waypoi
 
 The highway's waypoints loop around so the frenet s value, distance along the road, goes from 0 to 6945.554.
 
+## Algorithm Overview
+The general algorithm is close to what was presented in the lectures and in the project walkthrough.
+The main entry point for the calculations is calcPath() in line 16 in [path_planner.cpp](https://github.com/friedricherbs/CarND-Path-Planning/blob/master/src/path_planner.cpp). 
+First, the new target speed is calculated, see line 41. This function calcTargetSpeed() in line 128 identifies the closest leading in our lane and adapts the velocity accordingly.
+If there is a vehicle in front, the ego will try to change lane, see line 46 and line 169. The left and right lane are checked for for other vehicles. If the distance is large to the other vehicles, a lane safe is safe and the ego vehicle will change lane. If the lane change is not safe, the vehicle will slow down accordingly to avoid a collision, see line 157 and 162.
+Next, the new vehicle path can be built, see line 51 and 197. The function setupNextPath takes the end of the previous path and adds a few future points in frenet coordinates first and transforms them to global world coordinates. These points are then transformed to local vehicle coordinates, see line 55 and 238. The advantage of the local coordinates is the fact that a spline can be clearly fitted, see line 66. The local x coordinate parametrizes this spline, otherwise there might be ambiguities to have multiple y values for the same x value. The new path comprises the old path, see line 66 and 67 plus some new points along the spline. The function appendNewPoints() in line 69 and 260 does this job. It successively adapts the vehicle ego speed (see line 274 and 278) and appends new points along the spline. These points still need to be transformed to global world coordinates, see line 291.
+
+## Conclusion
+This was a hard project! The solution presented in the walkthrough is surprisingly simple, however there are many pitfalls to get stuck: 
+* planning s and d independently might cause trouble in curves because acceleration might become too large
+* handle latency from the simulator
+* not updating the path every cycle makes the car too sluggish
+
+Next step would be to improve the lane change decision. Currently the ego vehicle might get stuck on one lane if there is one vehicle ahead and another vehicle with a similar speed on the neighboring lane. In this case, an extended prepare lane change maneuver would be necessary. Besides a double lane change from lane 1 to 3 for example could be really helpful in some situations. Currently the algorithmn greedily chooses the next best lane but this is not optimal in any sense. 
+In total, very few concepts from the lectures could be applied to this project. I think the project would be much easier if the asynchronous path update was removed as shown in the simple python example in the lectures. In total, I could not learn so much from this project. 
+
 ## Basic Build Instructions
 
 1. Clone this repo.
