@@ -28,7 +28,7 @@ This was a hard project! The solution presented in the walkthrough is surprising
 * not updating the path every cycle makes the car too sluggish
 
 Next step would be to improve the lane change decision. Currently the ego vehicle might get stuck on one lane if there is one vehicle ahead and another vehicle with a similar speed on the neighboring lane. In this case, an extended prepare lane change maneuver would be necessary. Besides a double lane change from lane 1 to 3 for example could be really helpful in some situations. Currently the algorithmn greedily chooses the next best lane but this is not optimal in any sense. 
-In total, very few concepts from the lectures could be applied to this project. I think the project would be much easier if the asynchronous path update was removed as shown in the simple python example in the lectures. In total, I could not learn so much from this project. 
+In total, very few concepts from the lectures could be applied to this project. I think the project would be much easier if the asynchronous path update was removed as shown in the simple python example in the lectures. In total, I could not learn that much from this project. 
 
 ## Basic Build Instructions
 
