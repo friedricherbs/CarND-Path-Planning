@@ -46,9 +46,9 @@ void PathPlanner::calcPath(
     tryChangeLanes();
   }
 
-  // Setup curve through next waypoints in local coordinates
+  // Setup curve through next a set of points in global coordinates
   vector<double> ptsxGlobal, ptsyGlobal;
-  setupLocalNextPath(ptsxGlobal, ptsyGlobal);
+  setupNextPath(ptsxGlobal, ptsyGlobal);
 
   // Transform points to vehicle coordinates
   vector<double> ptsxLocal, ptsyLocal;
@@ -194,7 +194,7 @@ void PathPlanner::tryChangeLanes()
   }
 }
 
-void PathPlanner::setupLocalNextPath(vector<double>& ptsx, vector<double>& ptsy) const
+void PathPlanner::setupNextPath(vector<double>& ptsx, vector<double>& ptsy) const
 {
   // Setup next wps
   ptsx.clear();
@@ -271,11 +271,11 @@ void PathPlanner::appendNewPoints(
 
     if(m_targetSpeed > m_state.speedMph)
     {
-      m_state.speedMph += DIST_INCREASE;
+      m_state.speedMph += SPEED_INCREASE;
     }
     else if(m_targetSpeed < m_state.speedMph)
     {
-      m_state.speedMph -= DIST_INCREASE;
+      m_state.speedMph -= SPEED_INCREASE;
     }
 
 

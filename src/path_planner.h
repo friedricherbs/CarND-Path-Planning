@@ -72,7 +72,7 @@ private:
   void tryChangeLanes();
 
   // Setup next waypoints for ego path
-  void setupLocalNextPath(vector<double>& ptsx, vector<double>& ptsy) const;
+  void setupNextPath(vector<double>& ptsx, vector<double>& ptsy) const;
 
   // Transform points from global to vehicle coordinates
   void transformGlobal2Vehicle(
