@@ -13,9 +13,13 @@ The highway's waypoints loop around so the frenet s value, distance along the ro
 ## Algorithm Overview
 The general algorithm is close to what was presented in the lectures and in the project walkthrough.
 The main entry point for the calculations is calcPath() in line 16 in [path_planner.cpp](https://github.com/friedricherbs/CarND-Path-Planning/blob/master/src/path_planner.cpp). 
+
 First, the new target speed is calculated, see line 41. This function calcTargetSpeed() in line 128 identifies the closest leading in our lane and adapts the velocity accordingly.
 If there is a vehicle in front, the ego will try to change lane, see line 46 and line 169. The left and right lane are checked for for other vehicles. If the distance is large to the other vehicles, a lane safe is safe and the ego vehicle will change lane. If the lane change is not safe, the vehicle will slow down accordingly to avoid a collision, see line 157 and 162.
-Next, the new vehicle path can be built, see line 51 and 197. The function setupNextPath takes the end of the previous path and adds a few future points in frenet coordinates first and transforms them to global world coordinates. These points are then transformed to local vehicle coordinates, see line 55 and 238. The advantage of the local coordinates is the fact that a spline can be clearly fitted, see line 66. The local x coordinate parametrizes this spline, otherwise there might be ambiguities to have multiple y values for the same x value. The new path comprises the old path, see line 66 and 67 plus some new points along the spline. The function appendNewPoints() in line 69 and 260 does this job. It successively adapts the vehicle ego speed (see line 274 and 278) and appends new points along the spline. These points still need to be transformed to global world coordinates, see line 291.
+
+Next, the new vehicle path can be built, see line 51 and 197. The function setupNextPath takes the end of the previous path and adds a few future points in frenet coordinates first and transforms them to global world coordinates. These points are then transformed to local vehicle coordinates, see line 55 and 238. The advantage of the local coordinates is the fact that a spline can be clearly fitted, see line 66. The local x coordinate parametrizes this spline, otherwise there might be ambiguities to have multiple y values for the same x value. 
+
+The new path comprises the old path, see line 66 and 67 plus some new points along the spline. The function appendNewPoints() in line 69 and 260 does this job. It successively adapts the vehicle ego speed (see line 274 and 278) and appends new points along the spline. These points still need to be transformed to global world coordinates, see line 291.
 
 ## Conclusion
 This was a hard project! The solution presented in the walkthrough is surprisingly simple, however there are many pitfalls to get stuck: 
