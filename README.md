@@ -14,8 +14,8 @@ The highway's waypoints loop around so the frenet s value, distance along the ro
 The general algorithm is close to what was presented in the lectures and in the project walkthrough.
 The main entry point for the calculations is calcPath() in line 16 in [path_planner.cpp](https://github.com/friedricherbs/CarND-Path-Planning/blob/master/src/path_planner.cpp). 
 
-First, the new target speed is calculated, see line 41. This function calcTargetSpeed() in line 128 identifies the closest leading in our lane and adapts the velocity accordingly.
-If there is a vehicle in front, the ego will try to change lane, see line 46 and line 169. The left and right lane are checked for for other vehicles. If the distance is large to the other vehicles, a lane safe is safe and the ego vehicle will change lane. If the lane change is not safe, the vehicle will slow down accordingly to avoid a collision, see line 157 and 162.
+First, the new target speed is calculated, see line 41. This function calcTargetSpeed() in line 128 identifies the closest leading vehicle in our lane and adapts the velocity accordingly.
+If there is another vehicle in front, the ego will try to change lane, see line 46 and line 169. The left and right lanes are checked for other vehicles. If the distance to the other vehicles is large, a lane safe is safe and the ego vehicle will change lane. If the lane change is not safe, the vehicle will slow down accordingly to avoid a collision, see line 157 and 162.
 
 Next, the new vehicle path can be built, see line 51 and 197. The function setupNextPath takes the end of the previous path and adds a few future points in frenet coordinates first and transforms them to global world coordinates. These points are then transformed to local vehicle coordinates, see line 55 and 238. The advantage of the local coordinates is the fact that a spline can be clearly fitted, see line 66. The local x coordinate parametrizes this spline, otherwise there might be ambiguities to have multiple y values for the same x value. 
 
